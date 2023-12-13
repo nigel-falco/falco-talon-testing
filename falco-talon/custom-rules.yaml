@@ -1,5 +1,5 @@
 customRules:
-  custom_rules.yaml: |-
+  mitre_rules.yaml: |-
     - rule: Base64-encoded Python Script Execution
       desc: >
         This rule detects base64-encoded Python scripts on command line arguments.
