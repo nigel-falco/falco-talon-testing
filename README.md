@@ -62,7 +62,8 @@ mkdir falco-response
 cd falco-response
 ```
 
-Download the ```custom-rules.yaml``` file - this enables the by default disabled ```Detect outbound connections to common miner pool ports``` Falco Rule.
+Download the ```custom-rules.yaml``` file - this enables the by default disabled ```Detect outbound connections to common miner pool ports``` Falco Rule. <br/>
+However, I see to be breaking the deployment with the below ```custom-rules.yaml``` file, so I'm leaving it out for now.
 ```
 wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/custom-rules.yaml
 ```
@@ -75,12 +76,11 @@ helm install falco falcosecurity/falco --namespace falco \
   --set tty=true \
   --set falcosidekick.enabled=true \
   --set falcosidekick.webui.enabled=true \
-  --set falcosidekick.config.webhook.address=http://falco-talon:2803 \
   --set falcosidekick.webui.redis.storageEnabled=false \
+  --set falcosidekick.config.webhook.address=http://falco-talon:2803 \
   --set "falcoctl.config.artifact.install.refs={falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2}" \
   --set "falcoctl.config.artifact.follow.refs={falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2}" \
-  --set "falco.rules_file={/etc/falco/rules.d,/etc/falco/falco-rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}" \
-  -f custom-rules.yaml
+  --set "falco.rules_file={/etc/falco/rules.d,/etc/falco/falco-rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}"
 ```
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 54 12" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/245f4b4d-f1e3-422f-827c-24679c86c1ee">
