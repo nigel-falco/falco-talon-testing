@@ -163,3 +163,6 @@ cd xmrig-6.16.4
 ```
 ./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
 ```
+
+![Screenshot 2023-12-13 at 21 47 01](https://github.com/nigel-falco/falco-talon-testing/assets/152274017/9992baaa-0969-4e4e-b214-92fe62adbc94)
+
