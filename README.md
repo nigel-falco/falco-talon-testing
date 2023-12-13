@@ -94,7 +94,7 @@ git clone https://github.com/Issif/falco-talon.git
 
 The Talon rules file ```rules.yaml``` is located in the ```helm``` directory:
 ```
-cd deployment/helm/
+cd falco-talon/deployment/helm/
 ```
 
 Deploy Talon into the newly created ```falco``` network namespace:
@@ -104,6 +104,10 @@ helm install falco-talon . -n falco
 
 ```
 kubectl get pods -n falco
+```
+Talon can be removed at any time via:
+```
+helm uninstall falco-talon -n falco
 ```
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
