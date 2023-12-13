@@ -12,14 +12,14 @@
 - name: Rule NetworkPolicy
   match:
     rules:
-      - "Outbound Connection to C2 Servers"
+      - "Detect outbound connections to common miner pool ports"
   action:
     name: kubernetes:networkpolicy
   before: true
 - name: Rule Terminate
   match:
     rules:
-      - "Outbound Connection to C2 Servers"
+      - "Detect crypto miners using the Stratum protocol"
   action:
     name: kubernetes:terminate
     parameters:
