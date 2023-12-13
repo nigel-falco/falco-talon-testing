@@ -16,6 +16,10 @@ aws eks update-kubeconfig --region eu-west-1 --name falco-cluster
 ```
 eksctl create cluster --name falco-cluster --without-nodegroup
 ```
+
+<img width="919" alt="Screenshot 2023-12-13 at 20 22 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/e3e82de6-8da6-4d14-a83c-a1efed4ea685">
+
+
 Once ```aws-node``` DaemonSet is deleted, EKS will not try to restore it.
 ```
 kubectl -n kube-system delete daemonset aws-node
