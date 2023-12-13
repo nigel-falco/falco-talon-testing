@@ -41,10 +41,19 @@ helm install cilium cilium/cilium --version 1.9.18 \
   --set nodeinit.enabled=true
 ```
 
-Create a node group
+<img width="919" alt="Screenshot 2023-12-13 at 20 44 34" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/0d725bae-e9f0-4710-8844-37ea5c86f4f6">
+
+
+Create a node group since there are no worker nodes for our pods
 ```
 eksctl create nodegroup --cluster falco-cluster --node-type t3.xlarge --nodes 1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
 ```
+
+<img width="1199" alt="Screenshot 2023-12-13 at 20 45 45" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/e0e9f120-3777-4ec1-a8e3-21be46abeb8e">
+
+
+<img width="1199" alt="Screenshot 2023-12-13 at 20 51 27" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/c421c606-3570-4d66-ab90-2d2f218c165b">
+
 
 
 ## Install Falco and FalcoSideKick
@@ -62,11 +71,10 @@ helm install falco falcosecurity/falco --namespace falco \
   --set "falco.rules_file={/etc/falco/rules.d,/etc/falco/falco-rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}"
 ```
 
-## Install Falco Talon
+<img width="1199" alt="Screenshot 2023-12-13 at 20 54 12" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/245f4b4d-f1e3-422f-827c-24679c86c1ee">
 
-```
-cd Desktop
-```
+
+## Install Falco Talon
 
 ```
 mkdir falco-response
@@ -89,6 +97,18 @@ Deploy Talon into the newly created ```falco``` network namespace:
 ```
 helm install falco-talon . -n falco
 ```
+
+```
+kubectl get pods -n falco
+```
+
+<img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
+
+Now that Talon is installed successfully, let's play around with the rule logic.
+
+## Building custom rules
+
+
 
 
 ## Check for killed process in realtime
