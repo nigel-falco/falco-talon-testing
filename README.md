@@ -62,8 +62,9 @@ mkdir falco-response
 cd falco-response
 ```
 
+Download the ```custom-rules.yaml``` file - this enables the by default disabled ```Detect outbound connections to common miner pool ports``` Falco Rule.
 ```
-wget 
+wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/custom-rules.yaml
 ```
 
 ## Install Falco and FalcoSideKick
