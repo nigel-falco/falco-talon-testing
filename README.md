@@ -54,7 +54,17 @@ eksctl create nodegroup --cluster falco-cluster --node-type t3.xlarge --nodes 1 
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 51 27" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/c421c606-3570-4d66-ab90-2d2f218c165b">
 
+```
+mkdir falco-response
+```
 
+```
+cd falco-response
+```
+
+```
+wget 
+```
 
 ## Install Falco and FalcoSideKick
 
@@ -68,21 +78,14 @@ helm install falco falcosecurity/falco --namespace falco \
   --set falcosidekick.webui.redis.storageEnabled=false \
   --set "falcoctl.config.artifact.install.refs={falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2}" \
   --set "falcoctl.config.artifact.follow.refs={falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2}" \
-  --set "falco.rules_file={/etc/falco/rules.d,/etc/falco/falco-rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}"
+  --set "falco.rules_file={/etc/falco/rules.d,/etc/falco/falco-rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}" \
+  -f custom-rules.yaml
 ```
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 54 12" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/245f4b4d-f1e3-422f-827c-24679c86c1ee">
 
 
 ## Install Falco Talon
-
-```
-mkdir falco-response
-```
-
-```
-cd falco-response
-```
 
 ```
 git clone https://github.com/Issif/falco-talon.git
@@ -106,10 +109,19 @@ kubectl get pods -n falco
 
 Now that Talon is installed successfully, let's play around with the rule logic.
 
-## Building custom rules
+## Building custom rules for Falco Talon
 
+```
+rm rules.yaml
+```
 
+```
+wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/rules.yaml
+```
 
+```
+cat rules.yaml
+```
 
 ## Check for killed process in realtime
 Run this command command in the second window:
