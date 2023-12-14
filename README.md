@@ -166,6 +166,40 @@ cd xmrig-6.16.4
 
 ![Screenshot 2023-12-13 at 21 47 01](https://github.com/nigel-falco/falco-talon-testing/assets/152274017/9992baaa-0969-4e4e-b214-92fe62adbc94)
 
+
+
+## Launch a suspicious network tool in a container - NetPol use case
+```
+kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/dodgy-pod.yaml
+```
+
+```
+kubectl exec -it dodgy-pod -- bash
+```
+
+Installing a suspicious networking tool like telnet
+```
+yum install telnet telnet-server -y
+```
+If this fails, just apply a few modifications to the registry management:
+```
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+```
+Update the yum registry manager:
+```
+yum update -y
+```
+Now, try to install telnet and telnet server from the registry manager:
+```
+yum install telnet telnet-server -y
+```
+Just to generate the detection, run telnet:
+```
+telnet
+```
+
 ## Remember to scale down cluster when done
 ```
 eksctl scale nodegroup --cluster falco-cluster --name ng-81f26d2e --nodes 0
