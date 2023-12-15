@@ -3,6 +3,9 @@ kind: Pod
 metadata:
   name: dodgy-pod
   namespace: default
+  labels:
+    app: my-dodgy-app
+    environment: testing
 spec:
   containers:
   - name: centos
