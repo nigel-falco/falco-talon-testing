@@ -12,7 +12,7 @@
 - name: Rule NetworkPolicy
   match:
     rules:
-      - "Detect outbound connections to common miner pool ports"
+      - "Outbound Connection to C2 Servers"
   action:
     name: kubernetes:networkpolicy
   before: true
