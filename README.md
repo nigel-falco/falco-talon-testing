@@ -204,3 +204,8 @@ telnet
 ```
 eksctl scale nodegroup --cluster falco-cluster --name ng-81f26d2e --nodes 0
 ```
+
+Remember to port forward FalcoSideKick again after scaling-up the cluster:
+```
+kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
+```
