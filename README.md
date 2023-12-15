@@ -213,3 +213,15 @@ Remember to port forward FalcoSideKick again after scaling-up the cluster:
 ```
 kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
 ```
+
+Ths only Falco deployment working with the customer-rules.yaml manifest
+```
+helm install falco falcosecurity/falco \
+  -n falco \
+  --version 3.3.0 \
+  --set falcosidekick.enabled=true \
+  --set falcosidekick.webui.enabled=true \
+  --set collectors.kubernetes.enabled=true \
+  --set falcosidekick.webui.redis.storageEnabled=false \
+  -f custom-rules.yaml
+```
