@@ -173,10 +173,7 @@ cd xmrig-6.16.4
 
 
 
-## Launch a suspicious network tool in a container - NetPol use case
-```
-kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/dodgy-pod.yaml
-```
+## Enforce Network Policy on Suspicious Traffic
 
 ```
 kubectl exec -it dodgy-pod -- bash
@@ -184,45 +181,5 @@ kubectl exec -it dodgy-pod -- bash
 
 Installing a suspicious networking tool like telnet
 ```
-yum install telnet telnet-server -y
-```
-If this fails, just apply a few modifications to the registry management:
-```
-cd /etc/yum.repos.d/
-sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-```
-Update the yum registry manager:
-```
-yum update -y
-```
-Now, try to install telnet and telnet server from the registry manager:
-```
-yum install telnet telnet-server -y
-```
-Just to generate the detection, run telnet:
-```
-telnet
-```
-
-## Remember to scale down cluster when done
-```
-eksctl scale nodegroup --cluster falco-cluster --name ng-81f26d2e --nodes 0
-```
-
-Remember to port forward FalcoSideKick again after scaling-up the cluster:
-```
-kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
-```
-
-Ths only Falco deployment working with the customer-rules.yaml manifest
-```
-helm install falco falcosecurity/falco \
-  -n falco \
-  --version 3.3.0 \
-  --set falcosidekick.enabled=true \
-  --set falcosidekick.webui.enabled=true \
-  --set collectors.kubernetes.enabled=true \
-  --set falcosidekick.webui.redis.storageEnabled=false \
-  -f custom-rules.yaml
+curl 52.21.188.179
 ```
