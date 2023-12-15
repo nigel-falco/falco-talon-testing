@@ -128,8 +128,12 @@ Talon can be removed at any time via:
 ```
 helm uninstall falco-talon -n falco
 ```
+You'd need to uninstall Falco separately to Talon:
+```
+helm uninstall falco -n falco
+```
 
-Reload Talon to recognize the changed rules without any issues:
+Reload Talon to recognize the changed rules without any issues (granted Falco is already installed):
 ```
 helm install falco-talon . -n falco
 ```
