@@ -25,3 +25,17 @@
     parameters:
       ignoreDaemonsets: true
       ignoreStatefulsets: true
+- name: Rule Script
+  match:
+    rules:
+      - "Remove Bulk Data from Disk"
+  action:
+    name: kubernetes:script
+    parameters:
+      shell: sh
+      script: |
+        #!/bin/sh
+        uname
+        uname -r
+        uname -a
+        echo "hello world"
