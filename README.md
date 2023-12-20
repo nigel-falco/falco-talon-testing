@@ -194,6 +194,21 @@ kubectl get networkpolicy dodgy-pod -o yaml
 <img width="699" alt="Screenshot 2023-12-20 at 12 02 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/a5fdecad-292d-4597-8a18-13867cc40e73">
 
 
+## Testing the Script response action
+
+I wanted to automate this through Atomic Red tests <br/>
+https://falco.org/blog/falco-atomic-red/
+```
+Import-Module "~/AtomicRedTeam/invoke-atomicredteam/Invoke-AtomicRedTeam.psd1" -Force
+```
+Test the bulk file deletion simulation in Atomic Red:
+```
+Invoke-AtomicTest T1070.004
+```
+## Expose the Falcosidekick UI
+```
+kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
+```
 
 
 ## Scale down the cluster
