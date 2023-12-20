@@ -196,8 +196,16 @@ kubectl get networkpolicy dodgy-pod -o yaml
 
 ## Testing the Script response action
 
+Read sensitive file untrusted
+```
+sudo cat /etc/shadow > /dev/null
+```
+Search Private Keys or Passwords
+```
+sudo find /root -name "id_rsa"
+```
 I wanted to automate this through Atomic Red tests <br/>
-https://falco.org/blog/falco-atomic-red/
+```https://falco.org/blog/falco-atomic-red```
 ```
 Import-Module "~/AtomicRedTeam/invoke-atomicredteam/Invoke-AtomicRedTeam.psd1" -Force
 ```
