@@ -191,6 +191,9 @@ Check to confirm the IP address was blocked:
 kubectl get networkpolicy dodgy-pod -o yaml
 ```
 
+![Uploading Screenshot 2023-12-20 at 12.02.38.png…]()
+
+
 
 ## Scale down the cluster
 ```
