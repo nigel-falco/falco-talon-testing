@@ -173,10 +173,6 @@ cd xmrig-6.16.4
 
 ## Testing the Script response action
 
-```
-cd ..
-```
-
 Copy file from a container and trigger a ```Kubernetes Client Tool Launched in Container``` detection in Falco: <br/>
 https://thomas.labarussias.fr/falco-rules-explorer/?status=enabled&source=syscalls&maturity=all&hash=bc5091ab0698e22b68d788e490e8eb66
 
@@ -205,6 +201,9 @@ kubectl get networkpolicy dodgy-pod -o yaml
 
 <img width="699" alt="Screenshot 2023-12-20 at 12 02 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/a5fdecad-292d-4597-8a18-13867cc40e73">
 
+```
+kubectl delete networkpolicy dodgy-pod
+```
 ## Atomic Red Junk
 
 I wanted to automate this through Atomic Red tests <br/>
