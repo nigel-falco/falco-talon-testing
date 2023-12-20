@@ -28,14 +28,14 @@
 - name: Rule Script
   match:
     rules:
-      - "Remove Bulk Data from Disk"
+      - "Kubernetes Client Tool Launched in Container"
   action:
     name: kubernetes:script
     parameters:
       shell: sh
       script: |
         #!/bin/sh
-        uname
-        uname -r
-        uname -a
-        echo "hello world"
+        uname > helloworld.txt
+        uname -r >> helloworld.txt
+        uname -a >> helloworld.txt
+        echo "hello world" >> helloworld.txt
