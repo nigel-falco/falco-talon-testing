@@ -191,7 +191,8 @@ Check to confirm the IP address was blocked:
 kubectl get networkpolicy dodgy-pod -o yaml
 ```
 
-![Uploading Screenshot 2023-12-20 at 12.02.38.png…]()
+<img width="699" alt="Screenshot 2023-12-20 at 12 02 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/a5fdecad-292d-4597-8a18-13867cc40e73">
+
 
 
 
