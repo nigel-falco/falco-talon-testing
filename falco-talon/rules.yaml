@@ -35,4 +35,14 @@
       shell: sh
       script: |
         #!/bin/sh
-        mkdir helloworld
+        # Set the directory name
+        dir_name="helloworld"
+        # Check if the directory already exists
+        if [ ! -d "$dir_name" ]; then
+          # If it doesn't exist, create the directory
+          mkdir "$dir_name"
+          echo "Directory '$dir_name' created."
+        else
+          # If it already exists, print a message
+          echo "Directory '$dir_name' already exists."
+        fi
