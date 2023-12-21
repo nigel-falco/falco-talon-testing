@@ -28,7 +28,7 @@
 - name: Rule Script
   match:
     rules:
-      - "Kubernetes Client Tool Launched in Container"
+      - "Exfiltrating Artifacts via Kubernetes Control Plane"
   action:
     name: kubernetes:script
     parameters:
