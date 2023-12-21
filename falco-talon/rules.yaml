@@ -35,7 +35,4 @@
       shell: sh
       script: |
         #!/bin/sh
-        uname > helloworld.txt
-        uname -r >> helloworld.txt
-        uname -a >> helloworld.txt
-        echo "hello world" >> helloworld.txt
+        mkdir helloworld
