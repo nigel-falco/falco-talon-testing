@@ -33,7 +33,7 @@
     name: kubernetes:script
     parameters:
       shell: sh
-      script: helloworld.sh |
+      script: |
         #!/bin/sh
         # Set the directory name
         dir_name="helloworld"
