@@ -324,7 +324,7 @@ kubectl exec -it dodgy-pod -- bash
 ```
 Download the ```load_bpf.sh``` script in the running container:
 ```
-wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/load_bpf.sh
+curl -OL https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/load_bpf.sh
 ```
 ```
 chmod +x load_bpf.sh
