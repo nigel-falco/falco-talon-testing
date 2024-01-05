@@ -1,10 +1,6 @@
-#!/bin/bash
+#define _GNU_SOURCE
 
-# Define the BPF program file name
-BPF_PROGRAM="example.c"
-
-# Create the BPF program source file
-cat << 'EOF' > $BPF_PROGRAM
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -14,8 +10,7 @@ cat << 'EOF' > $BPF_PROGRAM
 
 int main(int argc, char **argv)
 {
-    int n;
-    int bfd, pfd;
+    int pfd;
     struct bpf_insn *insn;
     union bpf_attr attr;
     char log_buf[4096];
@@ -36,16 +31,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-EOF
-
-# Compile the BPF program
-gcc -o bpf_program $BPF_PROGRAM -I /usr/include/linux
-
-# Check if GCC compilation succeeded
-if [ $? -ne 0 ]; then
-    echo "Failed to compile BPF program"
-    exit 1
-fi
-
-# Run the compiled program
-sudo ./bpf_program
