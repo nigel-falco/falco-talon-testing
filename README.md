@@ -229,6 +229,10 @@ Check which deployment is associated with the recent eBPF Injection attempt.
 ```
 kubectl get deployments -A -o wide | grep threatgen
 ```
+Check that the pod is actually running without any issues:
+```
+kubectl get pods -n loadbpf -w
+```
 Shell into the container that performed the recent eBPF Injection attempt.
 ```
 kubectl exec -it -n loadbpf deploy/threatgen -- bash
