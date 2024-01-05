@@ -221,10 +221,18 @@ kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tl
 ```
 
 ## Trigger eBPF Program Injection
+Stored the ```threatgen``` tool locally in a file called ```stg.yaml```
 ```
 kubectl apply -f stg.yaml -n loadbpf
 ```
-
+Check which deployment is associated with the recent eBPF Injection attempt.
+```
+kubectl get deployments -A -o wide | grep threatgen
+```
+Shell into the container that performed the recent eBPF Injection attempt.
+```
+kubectl exec -it -n loadbpf deploy/threatgen -- bash
+```
 
 ## Scale down the cluster
 ```
