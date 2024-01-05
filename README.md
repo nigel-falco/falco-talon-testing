@@ -1,4 +1,4 @@
-# Detecting & Responding to threats in EKS in realtime via Falco Talon
+# Responding to threats in realtime with Falco Talon
 The lab should be reproducable for all EKS users. <br/>
 The cluster runs ```cilium cni``` for network traffic control in EKS <br/>
 Falco Talom is created in the same ```falco``` netwok namespace as OSS Falco.
@@ -355,6 +355,15 @@ echo 'I2RlZmluZSBfR05VX1NPVVJDRQoKI2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaW
 ```
 
 <br/><br/>
+
+This is all fine and dandy, but without the various prerequisites already installed on the pod, the adversary could inject the BPF program into the kernel without any automation response. And as such, I created a new pod manifest that already installed the prerequisites so that Falco Talon can take action effectively in production environments:
+```
+kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/bpf-pod.yaml
+```
+Shell into the ```BPF Pod```:
+```
+kubectl exec -it dodgy-pod -- bash
+```
 
 
 ## Scale down the cluster
