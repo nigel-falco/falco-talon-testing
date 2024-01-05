@@ -292,6 +292,8 @@ kubectl exec -it -n atomic-red deploy/atomicred -- bash
 pwsh
 ```
 
+<br/><br/>
+
 ### Running the eBPF simulation in Atomic Red
 Now, you can finally load the Atomic Red Team module:
 ```
@@ -308,6 +310,27 @@ Invoke-AtomicTest <bpf-id> -GetPreReqs
 Remove the feature flags to execute the test simulation.
 ```
 Invoke-AtomicTest <bpf-id>
+```
+
+<br/><br/>
+
+### Running the eBPF simulation manually
+Create a dodgy, overprivleged workload:
+```
+kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/dodgy-pod.yaml
+```
+```
+kubectl exec -it dodgy-pod -- bash
+```
+Download the ```load_bpf.sh``` script in the running container:
+```
+wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/load_bpf.sh
+```
+```
+chmod +x load_bpf.sh
+```
+```
+./load_bpf.sh
 ```
 
 ## Scale down the cluster
