@@ -264,10 +264,16 @@ Done executing cleanup for test: LOAD.BPF.PROG-1 Test
 Completed 1 tests. sleeping 10.
 Friday 01/05/2024 18:29 +00
 ```
+If it crashes, I need to better understand why the program crashes:
+```
+kubectl logs -n loadbpf [POD_NAME] --previous
+```
 
 I wrote an article on eBPF injections using Atomic Red tests. Let's just do it this way: <br/>
 https://www.blackhillsinfosec.com/real-time-threat-detection-for-kubernetes-with-atomic-red-tests-and-falco/
 <br/><br/>
+
+
 
 
 Before we start the deployment, remember to create the ```atomic-red``` network namespace.
