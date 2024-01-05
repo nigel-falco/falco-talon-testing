@@ -56,14 +56,12 @@
       shell: sh
       script: |
         #!/bin/sh
-        # Set the directory name
-        dir_name="helloworld"
-        # Check if the directory already exists
-        if [ ! -d "$dir_name" ]; then
-          # If it doesn't exist, create the directory
-          mkdir "$dir_name"
-          echo "Directory '$dir_name' created."
-        else
-          # If it already exists, print a message
-          echo "Directory '$dir_name' already exists."
-        fi
+
+        # Update the package list
+        dnf update -y
+
+        # Install the necessary packages for bpftool
+        dnf install -y elfutils-libelf-devel libcap-devel zlib-devel binutils-devel bpftool
+
+        # Run bpftool
+        bpftool prog -p
