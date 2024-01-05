@@ -237,7 +237,10 @@ Shell into the container that performed the recent eBPF Injection attempt.
 ```
 kubectl exec -it -n loadbpf deploy/threatgen -- bash
 ```
-
+STG keeps crashing in my CentOS pod, so I cannot rely on this for my demo:
+```
+kubectl delete -f stg.yaml -n loadbpf
+```
 ## Scale down the cluster
 ```
 eksctl scale nodegroup --cluster falco-cluster --name ng-81f26d2e --nodes 0
