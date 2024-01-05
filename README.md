@@ -204,23 +204,24 @@ kubectl get networkpolicy dodgy-pod -o yaml
 ```
 kubectl delete networkpolicy dodgy-pod
 ```
-## Atomic Red Junk
 
-I wanted to automate this through Atomic Red tests <br/>
-```https://falco.org/blog/falco-atomic-red```
-```
-Import-Module "~/AtomicRedTeam/invoke-atomicredteam/Invoke-AtomicRedTeam.psd1" -Force
-```
-Test the bulk file deletion simulation in Atomic Red:
-```
-Invoke-AtomicTest T1070.004
-```
+<br/><br/>
+
 ## Expose the Falcosidekick UI
 ```
 kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
 ```
 
+<br/><br/>
+
 ## Trigger eBPF Program Injection
+eBPF presents malware authors with a whole new set of tools, most of which are not understood well by the masses. <br/>
+This repository aims to introduce readers to what eBPF is and examine some of the basic building blocks of eBPF-based malware. <br/>
+We’ll close with thoughts on how to prevent and detect this emerging trend in malware.<br/>
+https://redcanary.com/blog/ebpf-malware/
+
+<br/><br/>
+
 Stored the ```threatgen``` tool locally in a file called ```stg.yaml```
 ```
 kubectl apply -f stg.yaml -n loadbpf
@@ -262,6 +263,51 @@ Executing cleanup for test: LOAD.BPF.PROG-1 Test
 Done executing cleanup for test: LOAD.BPF.PROG-1 Test
 Completed 1 tests. sleeping 10.
 Friday 01/05/2024 18:29 +00
+```
+
+I wrote an article on eBPF injections using Atomic Red tests. Let's just do it this way: <br/>
+https://www.blackhillsinfosec.com/real-time-threat-detection-for-kubernetes-with-atomic-red-tests-and-falco/
+<br/><br/>
+
+
+Before we start the deployment, remember to create the ```atomic-red``` network namespace.
+```
+kubectl create ns atomic-red
+```
+Creating the ```Atomic Red deployment``` into the correct network namespace:
+```
+Kubectl apply -f https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/kubernetes/k8s-deployment.yaml -n atomic-red
+```
+```
+kubectl get pods -n atomic-red
+```
+```
+kubectl get deployments -A -o wide | grep atomic-red
+```
+Open up a new terminal window for the shell session:
+```
+kubectl exec -it -n atomic-red deploy/atomicred -- bash
+```
+```
+pwsh
+```
+
+### Running the eBPF simulation in Atomic Red
+Now, you can finally load the Atomic Red Team module:
+```
+Import-Module "~/AtomicRedTeam/invoke-atomicredteam/Invoke-AtomicRedTeam.psd1" -Force
+```
+Check the details of the TTPs:
+```
+Invoke-AtomicTest <bpf-id> -ShowDetails
+```
+Check the prerequisites to ensure the test conditions are right:
+```
+Invoke-AtomicTest <bpf-id> -GetPreReqs
+```
+Remove the feature flags to execute the test simulation.
+```
+Invoke-AtomicTest <bpf-id>
 ```
 
 ## Scale down the cluster
