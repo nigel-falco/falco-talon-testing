@@ -332,6 +332,29 @@ chmod +x load_bpf.sh
 ```
 ./load_bpf.sh
 ```
+You need to install ```clang``` on your system.
+```
+dnf install clang
+```
+This throws an error - ```Cannot prepare internal mirrorlist: No URLs in mirrorlist``` <br/>
+We need to make some slight modifications in the CentOS pod:
+```
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+```
+Update the ```yum``` registry manager - just to be sure everything is running smoothly:
+```
+yum update -y
+```
+Re-run the ```clang``` install:
+```
+dnf install clang
+```
+This should now allow us to inject the BPF program into the kernel without any issues:
+```
+./load_bpf.sh
+```
 
 ## Scale down the cluster
 ```
