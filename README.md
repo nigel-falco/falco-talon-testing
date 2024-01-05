@@ -351,6 +351,9 @@ Re-run the ```clang``` install:
 ```
 dnf install clang
 ```
+```
+dnf install gcc
+```
 This should now allow us to inject the BPF program into the kernel without any issues:
 ```
 ./load_bpf.sh
