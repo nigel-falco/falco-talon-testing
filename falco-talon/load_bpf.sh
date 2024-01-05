@@ -1,64 +1,35 @@
-#!/bin/bash
+```
+#define _GNU_SOURCE
 
-# Define the BPF program
-BPF_PROGRAM="example.c"
-BPF_OBJECT="example.o"
-LOADER_PROGRAM="loader.c"
-LOADER_EXECUTABLE="loader"
-
-# Write the BPF program to a file
-cat << EOF > $BPF_PROGRAM
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <fcntl.h>
 #include <linux/bpf.h>
-#include <bpf/bpf_helpers.h>
 
-SEC("kprobe/sys_clone")
-int bpf_prog1(struct pt_regs *ctx) {
-    bpf_printk("Hello, BPF World!\n");
-    return 0;
-}
+int main(int argc, char **argv)
+{
+    int n;
+    int bfd, pfd;
+    struct bpf_insn *insn;
+    union bpf_attr attr;
+    char log_buf[4096];
+    char buf[] = "\x95\x00\x00\x00\x00\x00\x00\x00";
 
-char _license[] SEC("license") = "GPL";
-EOF
+    insn = (struct bpf_insn*)buf;
+    attr.prog_type = BPF_PROG_TYPE_KPROBE;
+    attr.insns = (unsigned long)insn;
+    attr.insn_cnt = sizeof(buf) / sizeof(struct bpf_insn);
+    attr.license = (unsigned long)"GPL";
+    attr.log_size = sizeof(log_buf);
+    attr.log_buf = (unsigned long)log_buf;
+    attr.log_level = 1;
+    attr.kern_version = 264656;
 
-# Write the loader program to a file
-cat << EOF > $LOADER_PROGRAM
-#include <bpf/libbpf.h>
-
-int main() {
-    struct bpf_object *obj;
-
-    // Load BPF object from file
-    obj = bpf_object__open("$BPF_OBJECT");
-    if (libbpf_get_error(obj))
-        return 1;
-
-    // Load BPF program into the kernel
-    if (bpf_object__load(obj))
-        return 1;
-
-    // More code to attach the program, handle errors, etc.
+    pfd = syscall(SYS_bpf, BPF_PROG_LOAD, &attr, sizeof(attr));
+    close(pfd);
 
     return 0;
 }
-EOF
-
-# Compile the BPF program
-clang -O2 -target bpf -c $BPF_PROGRAM -o $BPF_OBJECT
-
-# Check if clang compilation succeeded
-if [ $? -ne 0 ]; then
-    echo "Failed to compile BPF program"
-    exit 1
-fi
-
-# Compile the loader program
-gcc $LOADER_PROGRAM -o $LOADER_EXECUTABLE -lbpf
-
-# Check if gcc compilation succeeded
-if [ $? -ne 0 ]; then
-    echo "Failed to compile loader program"
-    exit 1
-fi
-
-# Run the loader program with root privileges
-sudo ./$LOADER_EXECUTABLE
+```
