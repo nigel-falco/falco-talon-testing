@@ -39,15 +39,13 @@ customRules:
         proc.sid=%proc.sid proc.exepath=%proc.exepath user.uid=%user.uid
         user.loginname=%user.loginname group.gid=%group.gid group.name=%group.name
         container.name=%container.name image=%container.image.repository)
-      priority: warning
+      priority: CRITICAL
       tags:
         - host
         - container
         - MITRE
         - MITRE_TA0005_defense_evasion
         - MITRE_TA0003_persistence
-      source: ''
-      append: false
       exceptions:
         - name: container_image_in
           comps: in
