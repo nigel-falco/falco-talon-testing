@@ -241,6 +241,29 @@ STG keeps crashing in my CentOS pod, so I cannot rely on this for my demo:
 ```
 kubectl delete -f stg.yaml -n loadbpf
 ```
+I checked the health status of the pod when running, and the injection is via Atomic Red:
+```
+kubectl logs -n loadbpf threatgen-7ff85df9f6-vjfdh
+```
+Outputs of Atomic Red:
+```
+Starting LOAD.BPF.PROG
+PathToAtomicsFolder = /root/AtomicRedTeam/atomics
+
+GetPrereq's for: LOAD.BPF.PROG-1 Test
+No Preqs Defined
+PathToAtomicsFolder = /root/AtomicRedTeam/atomics
+
+Executing test: LOAD.BPF.PROG-1 Test
+Done executing test: LOAD.BPF.PROG-1 Test
+PathToAtomicsFolder = /root/AtomicRedTeam/atomics
+
+Executing cleanup for test: LOAD.BPF.PROG-1 Test
+Done executing cleanup for test: LOAD.BPF.PROG-1 Test
+Completed 1 tests. sleeping 10.
+Friday 01/05/2024 18:29 +00
+```
+
 ## Scale down the cluster
 ```
 eksctl scale nodegroup --cluster falco-cluster --name ng-81f26d2e --nodes 0
