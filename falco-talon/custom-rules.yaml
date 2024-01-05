@@ -14,6 +14,8 @@ customRules:
         (fd.typechar = 4 or fd.typechar = 6) and
         (fd.ip != "0.0.0.0" and fd.net != "127.0.0.0/8" and not fd.snet in (rfc_1918_addresses)) and
         (evt.rawres >= 0 or evt.res = EINPROGRESS))
+    - macro: proc_name_exists
+      condition: (proc.name!="<NA>" and proc.name!="" and proc.name exists)    
     - list: c2_server_ip_list
       items:
         - "'52.21.188.179'"
