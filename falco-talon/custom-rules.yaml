@@ -16,9 +16,248 @@ customRules:
         (evt.rawres >= 0 or evt.res = EINPROGRESS))
     - list: c2_server_ip_list
       items:
-      - "'52.21.188.179'"
-      - "'54.237.103.220'"
+        - "'52.21.188.179'"
+        - "'54.237.103.220'"
     - list: rfc_1918_addresses
       items: ['"10.0.0.0/8"', '"172.16.0.0/12"', '"192.168.0.0/16"']
     - list: falco_containers
       items: ["docker.io/issif/falco-talon"]
+    - rule: eBPF Program Loaded into Kernel
+      desc: >-
+        This rule detects the runtime loading of an eBPF program into the kernel.
+        eBPF programs are extremely powerful, and as long as they conform to the
+        constraints imposed by the eBPF verifier (ex: they don't cause a kernel
+        panic), give near-arbitrary control over a target system.
+      condition: evt.type=bpf and evt.dir=> and evt.arg.cmd=5 and proc_name_exists
+      output: >-
+        eBPF Program Detected being loaded into the Kernel. Please investigate.
+        (proc.name=%proc.name proc.cmdline=%proc.cmdline connection=%fd.name
+        user.name=%user.name user.loginuid=%user.loginuid container.id=%container.id
+        evt.type=%evt.type proc.pid=%proc.pid proc.cwd=%proc.cwd
+        proc.pname=%proc.pname gparent=%proc.aname[2] ggparent=%proc.aname[3]
+        gggparent=%proc.aname[4] proc.ppid=%proc.ppid proc.pcmdline=%proc.pcmdline
+        proc.sid=%proc.sid proc.exepath=%proc.exepath user.uid=%user.uid
+        user.loginname=%user.loginname group.gid=%group.gid group.name=%group.name
+        container.name=%container.name image=%container.image.repository)
+      priority: warning
+      tags:
+        - host
+        - container
+        - MITRE
+        - MITRE_TA0005_defense_evasion
+        - MITRE_TA0003_persistence
+        - MITRE_T1611_escape_to_host
+        - >-
+          MITRE_T1547.006_boot_or_logon_autostart_execution_kernel_modules_and_extensions
+        - MITRE_TA0004_privilege_escalation
+        - MITRE_T1068_exploitation_for_privilege_escalation
+        - MITRE_T1495_firmware_corruption
+      source: ''
+      append: false
+      exceptions:
+        - name: container_image_in
+          comps: in
+          fields: container.image.repository
+          values:
+            - sysdig_commercial_images
+            - quay.io/cilium/cilium
+            - quay.io/kubescape/sneeffer
+            - registry.luntry.com/luntry/sensor-rs
+            - docker.io/aquasec/tracee
+            - quay.io/groundcover/caretta
+        - name: image_suffix
+          comps:
+            - endswith
+          fields:
+            - container.image.repository
+          values:
+            - - calico/node
+            - - tigera/cnx-node
+            - - amazonaws.com/aws-guardduty-agent
+            - - traceableai/ebpf-tracer
+            - - granulate/gprofiler
+            - - cilium/cilium
+            - - /datadoghq/agent
+            - - /grafana/beyla
+            - - docker/ucp-calico-node
+            - - /sustainable_computing_io/kepler
+            - - /isovalent/cilium
+            - - /aquasec/tracee
+            - - /amazon/aws-network-policy-agent
+        - name: proc_name
+          comps:
+            - in
+          fields:
+            - proc.name
+          values:
+            - - systemd
+            - - runc
+            - - system-probe
+            - - cilium-agent
+            - - lxc-start
+            - - init
+            - - sysdig
+            - - snap-confine
+            - - TaniumCX
+            - - pem
+            - - cpla
+            - - tetragon
+            - - oneagentnettracer
+            - - slkcndr
+            - - oneagentnettrac
+            - - hubble-fgs
+            - - nvidia-containe
+            - - falco
+            - - bpfink
+            - - dragent
+            - - calico-node
+            - - kubearmor
+            - - security_processes
+            - - clouddefenseai-
+            - - nomad
+        - name: proc_cmdline
+          comps:
+            - startswith
+          fields:
+            - proc.cmdline
+          values:
+            - - tc filter replace dev
+            - - 'runc:[2:INIT] init'
+            - - 'runc:[1:CHILD] init'
+            - - 'runc:[0:PARENT] init'
+        - name: proc_aname_2
+          comps: in
+          fields: 'proc.aname[2]'
+          values:
+            - cilium-agent
+            - cilium-bugtool
+            - cilium
+            - s1-orchestrator
+            - sentinelone-age
+        - name: proc_name_pname
+          comps:
+            - '='
+            - '='
+          fields:
+            - proc.name
+            - proc.pname
+          values:
+            - - tc
+            - calico-node
+            - - bpftool
+            - calico-node
+            - - bpftool
+            - cilium-agent
+            - - bpftool
+            - cilium
+            - - bpftool
+            - tetra
+            - - s1-perf
+            - s1-orchestrator
+            - - s1-agent
+            - s1-orchestrator
+            - - falcon-sensor-b
+            - falcond
+            - - falcon-sensor
+            - falcond
+            - - event_collector
+            - ECStateEngine
+            - - bpfink-generic
+            - bpfink-generic
+            - - bdsecd
+            - bdsecd
+            - - pwru
+            - pwru
+            - - conmon
+            - conmon
+            - - ebpf-sensor-0.2
+            - instana-schedul
+            - - bpf_preload
+            - systemd
+        - name: proc_name_image_repository
+          comps:
+            - '='
+            - endswith
+          fields:
+            - proc.name
+            - container.image.repository
+          values:
+            - - datacollector
+            - lacework/datacollector
+            - - collector
+            - registry.redhat.io/advanced-cluster-security/rhacs-collector-slim-rhel8
+            - - collector
+            - registry.redhat.io/advanced-cluster-security/rhacs-collector-rhel8
+            - - s1-perf
+            - amazonaws.com/tools/s1agent
+            - - kodem-komon-rel
+            - kodemsecurity/komon
+            - - worker
+            - docker.io/kubeshark/worker
+            - - tracer
+            - docker.io/kubeshark/worker
+            - - kernel-collecto
+            - splunk-network-explorer-kernel-collector
+            - - elastic-endpoin
+            - docker.elastic.co/elastic-security/elastic-sec-endpoint
+            - - grpc-health-pro
+            - amazonaws.com/amazon-k8s-cni
+            - - upwind-agent
+            - upwind.io/images/agent
+            - - ebpf-sensor-0.2
+            - /instana/agent
+            - - collector
+            - /stackrox-io/collector-slim
+            - - levo-ebpf-senso
+            - /levo-agent
+        - name: proc_pname
+          comps: in
+          fields: proc.pname
+          values:
+            - trinity-main
+            - trinity
+        - name: proc_exepath_prefix
+          comps:
+            - startswith
+          fields:
+            - proc.exepath
+          values:
+            - - /opt/instana/agent/
+            - - /opt/draios/bin/dragent
+            - - /opt/bitdefender-security-tools
+            - - /opt/ds_agent/nuagent/ds_nuagent
+            - - /opt/microsoft/mdatp/sbin/wdavdaemon
+            - - /opt/sentinelone/ebpfs
+            - - /home/ubuntu/draios/build/draios/bin/dragent
+        - name: proc_exepath_proc_aname
+          comps:
+            - startswith
+            - in
+          fields:
+            - proc.exepath
+            - proc.aname
+          values:
+            - - /usr/bin/crun
+            - - podman
+            - - /opt/carbonblack/psc/blades/
+            - - cb-psc-sensor.p
+        - name: proc_name_aname
+          comps:
+            - in
+            - in
+          fields:
+            - proc.name
+            - proc.aname
+          values:
+            - - - crun
+            - - podman
+            - - - sensor
+            - perf-sensor
+            - - sophos_watchdog
+        - name: proc_pcmdline
+          comps:
+            - startswith
+          fields:
+            - proc.pcmdline
+          values:
+            - - init.sh /var/lib/cilium/bpf/init.sh
