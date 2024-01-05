@@ -220,6 +220,11 @@ Invoke-AtomicTest T1070.004
 kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
 ```
 
+## Trigger eBPF Program Injection
+```
+kubectl apply -f stg.yaml -n loadbpf
+```
+
 
 ## Scale down the cluster
 ```
