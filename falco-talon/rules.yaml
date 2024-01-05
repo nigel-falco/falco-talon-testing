@@ -25,10 +25,31 @@
     parameters:
       ignoreDaemonsets: true
       ignoreStatefulsets: true
-- name: Rule Script
+- name: Exfiltrating K8s resource script
   match:
     rules:
       - "Exfiltrating Artifacts via Kubernetes Control Plane"
+  action:
+    name: kubernetes:script
+    parameters:
+      shell: sh
+      script: |
+        #!/bin/sh
+        # Set the directory name
+        dir_name="helloworld"
+        # Check if the directory already exists
+        if [ ! -d "$dir_name" ]; then
+          # If it doesn't exist, create the directory
+          mkdir "$dir_name"
+          echo "Directory '$dir_name' created."
+        else
+          # If it already exists, print a message
+          echo "Directory '$dir_name' already exists."
+        fi
+- name: eBPF Kernel Injection Script
+  match:
+    rules:
+      - "eBPF Program Loaded into Kernel"
   action:
     name: kubernetes:script
     parameters:
