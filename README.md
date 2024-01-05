@@ -215,8 +215,8 @@ kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tl
 <br/><br/>
 
 ## Trigger eBPF Program Injection
-eBPF presents malware authors with a whole new set of tools, most of which are not understood well by the masses. <br/>
-This repository aims to introduce readers to what eBPF is and examine some of the basic building blocks of eBPF-based malware. <br/>
+eBPF presents malware authors with a whole new set of tools, most of which are not understood well by the masses. 
+This repository aims to introduce readers to what eBPF is and examine some of the basic building blocks of eBPF-based malware. 
 We’ll close with thoughts on how to prevent and detect this emerging trend in malware.<br/>
 https://redcanary.com/blog/ebpf-malware/
 
@@ -325,45 +325,32 @@ Create a dodgy, overprivleged workload:
 ```
 kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/dodgy-pod.yaml
 ```
+Shell into the ```dodgy pod```:
 ```
 kubectl exec -it dodgy-pod -- bash
 ```
-Download the ```load_bpf.sh``` script in the running container:
-```
-curl -OL https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/load_bpf.sh
-```
-```
-chmod +x load_bpf.sh
-```
-```
-./load_bpf.sh
-```
-You need to install ```clang``` on your system.
-```
-dnf install clang
-```
-This throws an error - ```Cannot prepare internal mirrorlist: No URLs in mirrorlist``` <br/>
-We need to make some slight modifications in the CentOS pod:
+If you ```cannot prepare internal mirrorlist``` simply run the below modifications
 ```
 cd /etc/yum.repos.d/
 sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
 sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 ```
-Update the ```yum``` registry manager - just to be sure everything is running smoothly:
-```
-yum update -y
-```
-Re-run the ```clang``` install:
-```
-dnf install clang
-```
+You need to install ```gcc``` on the ```centos``` pod:
 ```
 dnf install gcc
 ```
-This should now allow us to inject the BPF program into the kernel without any issues:
+Downloaded the ```eBPF``` program code in ```Base64-encoded format``` to avoid traditional detection methods:
 ```
-./load_bpf.sh
+echo I2RlZmluZSBfR05VX1NPVVJDRQoKI2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaWIuaD4KI2luY2x1ZGUgPHVuaXN0ZC5oPgojaW5jbHVkZSA8c3lzL3N5c2NhbGwuaD4KI2luY2x1ZGUgPGZjbnRsLmg+CiNpbmNsdWRlIDxsaW51eC9icGYuaD4KCmludCBtYWluKGludCBhcmdjLCBjaGFyICoqYXJndikKewogICAgaW50IG47CiAgICBpbnQgYmZkLCBwZmQ7CiAgICBzdHJ1Y3QgYnBmX2luc24gKmluc247CiAgICB1bmlvbiBicGZfYXR0ciBhdHRyOwogICAgY2hhciBsb2dfYnVmWzQwOTZdOwogICAgY2hhciBidWZbXSA9ICJceDk1XHgwMFx4MDBceDAwXHgwMFx4MDBceDAwXHgwMCI7CgogICAgaW5zbiA9IChzdHJ1Y3QgYnBmX2luc24qKWJ1ZjsKICAgIGF0dHIucHJvZ190eXBlID0gQlBGX1BST0dfVFlQRV9LUFJPQkU7CiAgICBhdHRyLmluc25zID0gKHVuc2lnbmVkIGxvbmcpaW5zbjsKICAgIGF0dHIuaW5zbl9jbnQgPSBzaXplb2YoYnVmKSAvIHNpemVvZihzdHJ1Y3QgYnBmX2luc24pOwogICAgYXR0ci5saWNlbnNlID0gKHVuc2lnbmVkIGxvbmcpIkdQTCI7CiAgICBhdHRyLmxvZ19zaXplID0gc2l6ZW9mKGxvZ19idWYpOwogICAgYXR0ci5sb2dfYnVmID0gKHVuc2lnbmVkIGxvbmcpbG9nX2J1ZjsKICAgIGF0dHIubG9nX2xldmVsID0gMTsKICAgIGF0dHIua2Vybl92ZXJzaW9uID0gMjY0NjU2OwoKICAgIHBmZCA9IHN5c2NhbGwoU1lTX2JwZiwgQlBGX1BST0dfTE9BRCwgJmF0dHIsIHNpemVvZihhdHRyKSk7CiAgICBjbG9zZShwZmQpOwoKICAgIHJldHVybiAwOwp9Cg== | base64 -d > /tmp/prog.c
 ```
+
+```gcc``` stands for the ```GNU Compiler Collection```, which is a robust suite of compilers for various programming languages, most notably C and C++. It converts the assembly code into machine code in the form of object files (```.o files```). It's important to clarify that gcc itself does not directly load eBPF programs into the kernel. Instead, it compiles a higher-level language (like C) into a form that can then be translated into eBPF bytecode, which is what the Linux kernel understands and executes. Running the below command definitely triggers the eBPF injection attempt rule:
+```
+gcc /tmp/prog.c -o /tmp/prog && /tmp/prog
+```
+
+<br/><br/>
+
 
 ## Scale down the cluster
 ```
