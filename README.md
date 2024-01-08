@@ -356,13 +356,9 @@ echo 'I2RlZmluZSBfR05VX1NPVVJDRQoKI2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaW
 
 <br/><br/>
 
-This is all fine and dandy, but without the various prerequisites already installed on the pod, the adversary could inject the BPF program into the kernel without any automation response. And as such, I created a new pod manifest that already installed the prerequisites so that Falco Talon can take action effectively in production environments:
+This is all fine and dandy, but without the various prerequisites already installed on the pod, the adversary could inject the BPF program into the kernel without any automation response. And as such, we need tools like ```bpftool``` to be dynamically installed on each pod as soon as we seen insecure BPF interactions in containers. We can achieve this with Falco Talon:
 ```
-kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/bpf-pod.yaml
-```
-Shell into the ```BPF Pod```:
-```
-kubectl exec -it dodgy-pod -- bash
+dnf install -y elfutils-libelf-devel libcap-devel zlib-devel binutils-devel bpftool
 ```
 
 
