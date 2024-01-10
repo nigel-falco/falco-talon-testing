@@ -92,7 +92,7 @@ customRules:
         values:
         - - /var/lib/dkms/falco/
         - falcosecurity/falco-driver-loader  
-      - rule: eBPF Program Loaded into Kernel
+    - rule: eBPF Program Loaded into Kernel
       desc: >-
         This rule detects the runtime loading of an eBPF program into the kernel.
         eBPF programs are extremely powerful, and as long as they conform to the
