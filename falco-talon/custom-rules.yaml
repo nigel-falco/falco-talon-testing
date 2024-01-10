@@ -87,18 +87,7 @@ customRules:
           comps: in
           fields: container.image.repository
           values:
-            - sysdig_commercial_images
             - falco_privileged_images
-        - name: proc_args_image_repo_suffix
-          comps:
-            - contains
-            - endswith
-          fields:
-            - proc.args
-            - container.image.repository
-          values:
-            - - /var/lib/dkms/falco/
-            - falcosecurity/falco-driver-loader
 
     - rule: eBPF Program Loaded into Kernel
       desc: >-
