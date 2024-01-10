@@ -35,8 +35,7 @@ customRules:
 
     - rule: Linux Kernel Module Injection Detected
       desc: Detect kernel module was injected (from container).
-      condition: >-
-        spawned_process and container and proc.name=insmod and not proc.args in (white_listed_modules)
+      condition: spawned_process and container and proc.name=insmod and not proc.args in (white_listed_modules)
       output: >-
         Linux Kernel Module injection using insmod detected (user.name=%user.name
         user.loginuid=%user.loginuid proc.name=%proc.name proc.pname=%proc.pname
