@@ -24,7 +24,75 @@ customRules:
       items: ['"10.0.0.0/8"', '"172.16.0.0/12"', '"192.168.0.0/16"']
     - list: falco_containers
       items: ["docker.io/issif/falco-talon"]
-    - rule: eBPF Program Loaded into Kernel
+    - list: white_listed_modules
+      items: []  
+    - rule: Linux Kernel Module Injection Detected
+      desc: Detect kernel module was injected (from container).
+      condition: >-
+        spawned_process and container and proc.name=insmod and not proc.args in (white_listed_modules)
+      output: >-
+        Linux Kernel Module injection using insmod detected (user.name=%user.name
+        user.loginuid=%user.loginuid proc.name=%proc.name proc.pname=%proc.pname
+        gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4]
+        evt.type=%evt.type evt.res=%evt.res proc.pid=%proc.pid
+        proc.cmdline=%proc.cmdline proc.cwd=%proc.cwd proc.ppid=%proc.ppid
+        proc.pcmdline=%proc.pcmdline proc.sid=%proc.sid proc.exepath=%proc.exepath
+        user.uid=%user.uid user.loginname=%user.loginname group.gid=%group.gid
+        group.name=%group.name container.id=%container.id
+        container.name=%container.name
+        image=%container.image.repository:%container.image.tag module=%proc.args)
+      priority: WARNING
+      tags:
+      - container
+      - process
+      - MITRE_TA0004_privilege_escalation
+      - MITRE_TA0003_persistence
+      - MITRE_T1547.006_boot_or_logon_autostart_execution_kernel_modules_and_extensions
+      - MITRE_T1059.004_command_and_scripting_interpreter_unix_shell
+      - MITRE_T1611_escape_to_host
+      - MITRE_T1106_native_API
+      - MITRE_T1068_exploitation_for_privilege_escalation
+      - MITRE_T1495_firmware_corruption
+      exceptions:
+      - name: proc_cmdline_contains
+        comps:
+        - contains
+        fields:
+        - proc.cmdline
+        values:
+        - - falco/falco_
+        - - driver/x86_64/falco_amazonlinux
+        - - x86_64/module/scap.ko
+      - name: proc_cmdline_startswith
+        comps:
+        - startswith
+        fields:
+        - proc.cmdline
+      - name: proc_pname
+        comps:
+        - '='
+        fields:
+        - proc.pname
+        values:
+        - - runmmfs
+        - - sysdigcloud-pro
+      - name: container_image_in
+        comps: in
+        fields: container.image.repository
+        values:
+        - sysdig_commercial_images
+        - falco_privileged_images
+      - name: proc_args_image_repo_suffix
+        comps:
+        - contains
+        - endswith
+        fields:
+        - proc.args
+        - container.image.repository
+        values:
+        - - /var/lib/dkms/falco/
+        - falcosecurity/falco-driver-loader  
+      - rule: eBPF Program Loaded into Kernel
       desc: >-
         This rule detects the runtime loading of an eBPF program into the kernel.
         eBPF programs are extremely powerful, and as long as they conform to the
