@@ -364,5 +364,5 @@ dnf install -y elfutils-libelf-devel libcap-devel zlib-devel binutils-devel bpft
 
 ## Scale down the cluster
 ```
-eksctl scale nodegroup --cluster falco-cluster2 --name ng-f792a52a --nodes 0
+eksctl scale nodegroup --cluster falco-cluster2 --name ng-dd59a1b5 --nodes 0
 ```
