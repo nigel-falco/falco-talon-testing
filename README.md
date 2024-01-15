@@ -14,7 +14,7 @@ aws eks update-kubeconfig --region eu-west-1 --name falco-cluster
 ## Create EKS Cluster with Cilium CNI
 
 ```
-eksctl create cluster --name falco-cluster --without-nodegroup
+eksctl create cluster --name falco-cluster2 --without-nodegroup
 ```
 
 <img width="919" alt="Screenshot 2023-12-13 at 20 22 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/e3e82de6-8da6-4d14-a83c-a1efed4ea685">
@@ -46,7 +46,7 @@ helm install cilium cilium/cilium --version 1.9.18 \
 
 Create a node group since there are no worker nodes for our pods
 ```
-eksctl create nodegroup --cluster falco-cluster --node-type t3.xlarge --nodes 1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
+eksctl create nodegroup --cluster falco-cluster2 --node-type t3.xlarge --nodes 1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
 ```
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 45 45" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/e0e9f120-3777-4ec1-a8e3-21be46abeb8e">
@@ -364,5 +364,5 @@ dnf install -y elfutils-libelf-devel libcap-devel zlib-devel binutils-devel bpft
 
 ## Scale down the cluster
 ```
-eksctl scale nodegroup --cluster falco-cluster --name ng-f792a52a --nodes 0
+eksctl scale nodegroup --cluster falco-cluster2 --name ng-f792a52a --nodes 0
 ```
