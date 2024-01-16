@@ -8,7 +8,7 @@ Set up an ```AWS-CLI Profile``` in order to interact with AWS services via my lo
 aws configure --profile nigel-aws-profile
 export AWS_PROFILE=nigel-aws-profile                                            
 aws sts get-caller-identity --profile nigel-aws-profile
-aws eks update-kubeconfig --region eu-west-1 --name falco-cluster
+aws eks update-kubeconfig --region eu-west-1 --name falco-cluster2
 ```
 
 ## Create EKS Cluster with Cilium CNI
