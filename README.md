@@ -84,7 +84,8 @@ helm install falco falcosecurity/falco --namespace falco \
   -f custom-rules.yaml
 ```
 
-<img width="1199" alt="Screenshot 2023-12-13 at 20 54 12" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/245f4b4d-f1e3-422f-827c-24679c86c1ee">
+<img width="1075" alt="Screenshot 2024-01-16 at 11 37 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/148ebf95-65c9-4e63-a4ea-b5145017ff5e">
+
 
 
 ## Install Falco Talon
