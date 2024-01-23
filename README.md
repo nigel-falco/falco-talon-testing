@@ -49,10 +49,8 @@ Create a node group since there are no worker nodes for our pods
 eksctl create nodegroup --cluster falco-cluster --node-type t3.xlarge --nodes 1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
 ```
 
-<img width="1199" alt="Screenshot 2023-12-13 at 20 45 45" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/e0e9f120-3777-4ec1-a8e3-21be46abeb8e">
+<img width="986" alt="Screenshot 2024-01-23 at 13 56 26" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/0a8f6769-8784-4d47-b6fd-c517e1340f31">
 
-
-<img width="1199" alt="Screenshot 2023-12-13 at 20 51 27" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/c421c606-3570-4d66-ab90-2d2f218c165b">
 
 ```
 mkdir falco-response
