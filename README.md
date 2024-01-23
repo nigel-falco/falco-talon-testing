@@ -216,5 +216,5 @@ kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tl
 
 ## Scale down the cluster
 ```
-eksctl scale nodegroup --cluster falco-cluster2 --name ng-dd59a1b5 --nodes 0
+eksctl scale nodegroup --cluster falco-cluster --name ng-201ab6f7 --nodes 1
 ```
