@@ -8,7 +8,7 @@
     name: kubernetes:labelize
     parameters:
       labels:
-        suspicious: "true"
+        quarantine: "true"
 - name: Rule NetworkPolicy
   match:
     rules:
@@ -46,22 +46,3 @@
           # If it already exists, print a message
           echo "Directory '$dir_name' already exists."
         fi
-- name: eBPF Kernel Injection Script
-  match:
-    rules:
-      - "eBPF Program Loaded into Kernel"
-  action:
-    name: kubernetes:script
-    parameters:
-      shell: sh
-      script: |
-        #!/bin/sh
-
-        # Update the package list
-        dnf update -y
-
-        # Install the necessary packages for bpftool
-        dnf install -y elfutils-libelf-devel libcap-devel zlib-devel binutils-devel bpftool
-
-        # Run bpftool
-        bpftool prog -p
