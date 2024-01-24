@@ -97,20 +97,7 @@ The Talon rules file ```rules.yaml``` is located in the ```helm``` directory:
 cd falco-talon/deployment/helm/
 ```
 
-Deploy Talon into the newly created ```falco``` network namespace:
-```
-helm install falco-talon . -n falco
-```
-
-```
-kubectl get pods -n falco
-```
-
-<img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
-
-Now that Talon is installed successfully, let's play around with the rule logic.
-
-## Building custom rules for Falco Talon
+Before installing, let's enforce the custom response actions for OWASP T10 framework.
 
 ```
 rm rules.yaml
@@ -120,23 +107,21 @@ rm rules.yaml
 wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/rules.yaml
 ```
 
+Deploy Talon into the newly created ```falco``` network namespace:
 ```
-cat rules.yaml
+helm install falco-talon . -n falco
 ```
 
 Talon can be removed at any time via:
 ```
 helm uninstall falco-talon -n falco
 ```
-You'd need to uninstall Falco separately to Talon:
+
 ```
-helm uninstall falco -n falco
+kubectl get pods -n falco
 ```
 
-Reload Talon to recognize the changed rules without any issues (granted Falco is already installed):
-```
-helm install falco-talon . -n falco
-```
+<img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
 
 ## Check for killed process in realtime
 Run this command command in the second window:
