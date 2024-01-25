@@ -166,7 +166,8 @@ cd xmrig-6.16.4
 ./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
 ```
 
-![Screenshot 2023-12-13 at 21 47 01](https://github.com/nigel-falco/falco-talon-testing/assets/152274017/9992baaa-0969-4e4e-b214-92fe62adbc94)
+![Screenshot 2024-01-25 at 16 29 09](https://github.com/nigel-falco/falco-talon-testing/assets/152274017/ce72b48a-bbef-417d-a26b-33740ff3d3c4)
+
 
 ## Testing the Script response action
 
@@ -189,14 +190,10 @@ Installing a suspicious networking tool like telnet
 curl 52.21.188.179
 ```
 
-![Screenshot 2023-12-15 at 15 41 55](https://github.com/nigel-falco/falco-talon-testing/assets/152274017/f46b80a5-89e2-448e-9560-a4e7b070bc99)
-
 Check to confirm the IP address was blocked:
 ```
 kubectl get networkpolicy dodgy-pod -o yaml
 ```
-
-<img width="699" alt="Screenshot 2023-12-20 at 12 02 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/a5fdecad-292d-4597-8a18-13867cc40e73">
 
 ```
 kubectl delete networkpolicy dodgy-pod
