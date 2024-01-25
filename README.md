@@ -219,3 +219,8 @@ Scale down the cluster
 ```
 eksctl scale nodegroup --cluster falco-cluster --name ng-201ab6f7 --nodes 1
 ```
+
+Kubecolor
+```
+alias kubectl="kubecolor"
+```
