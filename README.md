@@ -19,7 +19,7 @@ The Open Web Application Security Project ([OWASP](https://owasp.org/)) is a glo
 | K07: Missing Network Segmentation Controls | K07:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K08: Secrets Management Failures | K08:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K09: Misconfigured Cluster Components | K09:01 | | `Falco rule for detecting the issue` | Example Talon action |
-| K10: Outdated and Vulnerable Kubernetes Components | K10:01 | Example description | `Falco rule for detecting outdated components` | Example Talon action for outdated components |
+| K10: Outdated and Vulnerable Kubernetes Components | K10:01 | | `Falco rule for detecting outdated components` | Example Talon action for outdated components |
 
 
 ## Prerequisite Checks
