@@ -11,15 +11,15 @@ The Open Web Application Security Project ([OWASP](https://owasp.org/)) is a glo
 | | K01:03 | Privileged containers should be disallowed | `Create Privileged Pod` | Example Talon action for privileged containers |
 | K02: Supply Chain Vulnerabilities | K02:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K03: Overly Permissive RBAC Configurations | K03:01 | Unnecessary use of cluster-admin | `Falco rule for detecting the issue` | Example Talon action |
-| | K03:02 | Unnecessary use of LIST permission | `Falco rule for detecting the issues` | Example Talon action for writable filesystems |
-| | K03:03 | Unnecessary use of WATCH permission | `Falco rule for detecting the issue` | Example Talon action for privileged containers |
+| | K03:02 | Unnecessary use of LIST permission | `Falco rule for detecting the issues` | Example Talon action |
+| | K03:03 | Unnecessary use of WATCH permission | `Falco rule for detecting the issue` | Example Talon action |
 | K04: Lack of Centralized Policy Enforcement | K04:01 | | `Container Run with Public Image` | Example Talon action |
 | K05: Inadequate Logging and Monitoring | K05:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K06: Broken Authentication Mechanisms | K06:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K07: Missing Network Segmentation Controls | K07:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K08: Secrets Management Failures | K08:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K09: Misconfigured Cluster Components | K09:01 | | `Falco rule for detecting the issue` | Example Talon action |
-| K10: Outdated and Vulnerable Kubernetes Components | K10:01 | | `Falco rule for detecting outdated components` | Example Talon action for outdated components |
+| K10: Outdated and Vulnerable Kubernetes Components | K10:01 | | `Falco rule for detecting outdated components` | Example Talon action |
 
 
 ## Prerequisite Checks
