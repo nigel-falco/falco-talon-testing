@@ -39,3 +39,6 @@ customRules:
 
     - rule: Change thread namespace
       enabled: false
+
+    - rule: BPF Program Not Profiled
+      enabled: false
