@@ -216,7 +216,10 @@ helm uninstall falco-talon -n falco
 
 Scale down the cluster
 ```
-eksctl scale nodegroup --cluster falco-cluster --name ng-201ab6f7 --nodes 1
+eksctl get nodegroups --cluster falco-cluster
+```
+```
+eksctl scale nodegroup --cluster falco-cluster --name ng-03dfe2da --nodes 0
 ```
 
 Kubecolor
