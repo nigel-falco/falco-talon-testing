@@ -6,7 +6,7 @@ The Open Web Application Security Project ([OWASP](https://owasp.org/)) is a glo
 ### Table of Contents
 | OWASP Control | CID | Description | Falco Rule | Talon Response Action |
 |---------------|-------------|-------------|------------|-----------------------|
-| K01: Insecure Workload Configurations | K01:01 | Application processes should not run as root | `Container Run as Root User` | [Terminate pod](https://github.com/nigel-falco/falco-talon-testing/blob/main/falco-talon/rules.yaml#L38-L43) |
+| K01: Insecure Workload Configurations | [K01:01](https://github.com/nigel-falco/falco-talon-testing/tree/main?tab=readme-ov-file#k0101-application-processes-should-not-run-as-root) | Application processes should not run as root | `Container Run as Root User` | [Terminate pod](https://github.com/nigel-falco/falco-talon-testing/blob/main/falco-talon/rules.yaml#L38-L43) |
 | | K01:02 | Read-only filesystems should be used | `Container Run with Writable filesystems` | Example Talon action for writable filesystems |
 | | K01:03 | Privileged containers should be disallowed | `Create Privileged Pod` | Example Talon action for privileged containers |
 | K02: Supply Chain Vulnerabilities | K02:01 | Example description | `Falco rule for detecting the issue` | Example Talon action |
