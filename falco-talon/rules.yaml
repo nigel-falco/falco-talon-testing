@@ -26,14 +26,14 @@
       parameters:
         grace_period_seconds: 0
 
-- rule: Terminal shell in container
-  match:
-    rules:
-      - Terminal shell in container
-    output_fields:
-      - k8s.ns.name!=kube-system, k8s.ns.name!=falco
-  actions:
-    - action: Labelize Pod as Suspicious
+# - rule: Terminal shell in container
+#   match:
+#     rules:
+#       - Terminal shell in container
+#     output_fields:
+#       - k8s.ns.name!=kube-system, k8s.ns.name!=falco
+#   actions:
+#     - action: Labelize Pod as Suspicious
 
 - rule: Container Run as Root User
   match:
