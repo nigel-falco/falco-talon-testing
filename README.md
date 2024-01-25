@@ -112,7 +112,9 @@ The security context of a workload in Kubernetes is highly configurable which ca
 ```
 kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/RunAsRoot.yaml
 ```
-
+```
+kubectl get events -n default -w
+```
 
 ## K02: Supply Chain Vulnerabilities
 ## K03: Overly Permissive RBAC Configurations
