@@ -47,3 +47,15 @@ customRules:
     - rule: Container Run as Root User
       enabled: true
       tags: [maturity_sandbox, owasp_k8s_T10, K01.01, insecure_workload, mitre_execution, T1610]
+
+    - rule: Container Run with Read-Only FileSystem Disabled
+      desc: Detects containers launched with the readOnlyRootFilesystem security setting explicitly set to false. This configuration allows write access to the containers root filesystem, increasing the risk of malicious modifications. Enforcing a read-only root filesystem is a security best practice aimed at limiting the attack surface. This rule aims to identify and flag containers that deviate from this practice by allowing writable root filesystems.
+      condition:  > 
+        spawned_process and
+        container and
+        k8s.ns.name = "default" and
+        not container.readOnlyRootFilesystem
+      enabled: true
+      output: Container launched with writable root filesystem (evt_type=%evt.type user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags %container.info %k8s.ns.name)
+      priority: INFO
+      tags: [owasp_T10, K01_02, insecure_workloads, read_only_fs, default_namespace]
