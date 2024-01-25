@@ -9,8 +9,8 @@ Table of Contents
 | | K01:03 | Privileged containers should be disallowed | `Create Privileged Pod` | Example Talon action for privileged containers |
 | K02: Supply Chain Vulnerabilities | K02:01 | Example description | `Falco rule for detecting the issue` | Example Talon action |
 | K03: Overly Permissive RBAC Configurations | K03:01 | Unnecessary use of cluster-admin | `Falco rule for detecting the issue` | Example Talon action |
-| | K03:02 | Unnecessary use of LIST permission | `Falco rule for detecting writable filesystems on containers` | Example Talon action for writable filesystems |
-| | K03:03 | Unnecessary use of WATCH permission | `Falco rule for detecting privileged containers` | Example Talon action for privileged containers |
+| | K03:02 | Unnecessary use of LIST permission | `Falco rule for detecting the issues` | Example Talon action for writable filesystems |
+| | K03:03 | Unnecessary use of WATCH permission | `Falco rule for detecting the issue` | Example Talon action for privileged containers |
 | K04: Lack of Centralized Policy Enforcement | K04:01 | | `Container Run with Public Image` | Example Talon action |
 | K05: Inadequate Logging and Monitoring | K05:01 | | `Falco rule for detecting the issue` | Example Talon action |
 | K06: Broken Authentication Mechanisms | K06:01 | | `Falco rule for detecting the issue` | Example Talon action |
