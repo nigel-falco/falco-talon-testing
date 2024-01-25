@@ -4,7 +4,7 @@
 Table of Contents
 | OWASP Control | Sub-Control | Description | Falco Rule | Talon Response Action |
 |---------------|-------------|-------------|------------|-----------------------|
-| K01: Insecure Workload Configurations | K01:01 | Application processes should not run as root | `Falco rule for detecting root processes` | Example Talon action for root processes |
+| K01: Insecure Workload Configurations | K01:01 | Application processes should not run as root | `[Container Run as Root User](https://github.com/falcosecurity/rules/blob/main/rules/falco-sandbox_rules.yaml#L1598,L1612)` | [Terminate pod run as root user](https://github.com/nigel-falco/falco-talon-testing/blob/main/falco-talon/rules.yaml#L38-L43) |
 | | K01:02 | Read-only filesystems should be used | `Falco rule for detecting writable filesystems on containers` | Example Talon action for writable filesystems |
 | | K01:03 | Privileged containers should be disallowed | `Falco rule for detecting privileged containers` | Example Talon action for privileged containers |
 | K02: Supply Chain Vulnerabilities | Example sub-control | Example description | `Falco rule for detecting the issue` | Example Talon action |
