@@ -11,12 +11,12 @@ Table of Contents
 | K03: Overly Permissive RBAC Configurations | K03:01 | Unnecessary use of cluster-admin | `Falco rule for detecting the issue` | Example Talon action |
 | | K03:02 | Unnecessary use of LIST permission | `Falco rule for detecting writable filesystems on containers` | Example Talon action for writable filesystems |
 | | K03:03 | Unnecessary use of WATCH permission | `Falco rule for detecting privileged containers` | Example Talon action for privileged containers |
-| K04: Lack of Centralized Policy Enforcement | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
-| K05: Inadequate Logging and Monitoring | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
-| K06: Broken Authentication Mechanisms | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
-| K07: Missing Network Segmentation Controls | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
-| K08: Secrets Management Failures | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
-| K09: Misconfigured Cluster Components | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
+| K04: Lack of Centralized Policy Enforcement | Example sub-control | | `Falco rule for detecting the issue` | Example Talon action |
+| K05: Inadequate Logging and Monitoring | Example sub-control | | `Falco rule for detecting the issue` | Example Talon action |
+| K06: Broken Authentication Mechanisms | Example sub-control | | `Falco rule for detecting the issue` | Example Talon action |
+| K07: Missing Network Segmentation Controls | Example sub-control | | `Falco rule for detecting the issue` | Example Talon action |
+| K08: Secrets Management Failures | Example sub-control | | `Falco rule for detecting the issue` | Example Talon action |
+| K09: Misconfigured Cluster Components | Example sub-control | | `Falco rule for detecting the issue` | Example Talon action |
 | K10: Outdated and Vulnerable Kubernetes Components | Example sub-control | Example description | `Falco rule for detecting outdated components` | Example Talon action for outdated components |
 
 
