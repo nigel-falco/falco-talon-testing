@@ -103,15 +103,6 @@ Deploy Talon into the newly created ```falco``` network namespace:
 helm install falco-talon . -n falco
 ```
 
-Talon can be removed at any time via:
-```
-helm uninstall falco-talon -n falco
-```
-
-```
-kubectl get pods -n falco
-```
-
 
 ## K01: Insecure Workload Configurations
 The security context of a workload in Kubernetes is highly configurable which can lead to serious security misconfigurations propagating across an organization’s workloads and clusters. The Kubernetes adoption, security, and market trends report 2022 from Redhat stated that nearly 53% of respondents have experienced a misconfiguration incident in their Kubernetes environments in the last 12 months.
@@ -211,13 +202,18 @@ kubectl delete networkpolicy dodgy-pod
 
 <br/><br/>
 
-## Expose the Falcosidekick UI
+## Miscellaneous commands:
+Expose the Falcosidekick UI
 ```
 kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802 --insecure-skip-tls-verify
 ```
 
+Talon can be removed at any time via:
+```
+helm uninstall falco-talon -n falco
+```
 
-## Scale down the cluster
+Scale down the cluster
 ```
 eksctl scale nodegroup --cluster falco-cluster --name ng-201ab6f7 --nodes 1
 ```
