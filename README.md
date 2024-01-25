@@ -1,7 +1,7 @@
 # Mitigating K8s OWASP T10 risks with a cloud-native response engine
 
 
-Table of Contents
+### Table of Contents
 | OWASP Control | CID | Description | Falco Rule | Talon Response Action |
 |---------------|-------------|-------------|------------|-----------------------|
 | K01: Insecure Workload Configurations | K01:01 | Application processes should not run as root | `Container Run as Root User` | [Terminate pod](https://github.com/nigel-falco/falco-talon-testing/blob/main/falco-talon/rules.yaml#L38-L43) |
