@@ -1,4 +1,4 @@
-# Responding K8s OWASP T10 risks in realtime with Falco Talon
+# Mitigating K8s OWASP T10 risks with a cloud-native response engine
 The lab should be reproducable for all EKS users. <br/>
 The cluster runs ```cilium cni``` for network traffic control in EKS <br/>
 Falco Talom is created in the same ```falco``` netwok namespace as OSS Falco.
