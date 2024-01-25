@@ -109,13 +109,32 @@ The security context of a workload in Kubernetes is highly configurable which ca
 
 
 
-#### K01.01: Application processes should not run as root
+### K01.01: Application processes should not run as root
+
+Running the process inside of a container as the ```root``` user is a common misconfiguration in many clusters. While ```root``` may be an absolute requirement for some workloads, it should be avoided when possible. If the container were to be compromised, the attacker would have root-level privileges that allow actions such as starting a malicious process that otherwise wouldn’t be permitted with other users on the system.
+
 ```
 kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/RunAsRoot.yaml
 ```
 ```
 kubectl get events -n default -w
 ```
+
+<img width="866" alt="Screenshot 2024-01-25 at 19 59 15" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/7ea928c2-fd23-4f7a-a0d9-e75b66edbb2f">
+
+<img width="1366" alt="Screenshot 2024-01-25 at 19 59 44" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/ffb465aa-4a0e-49f2-b761-fd65feb56281">
+
+### K01.03: Privileged containers should be disallowed
+
+When setting a container to ```privileged``` within Kubernetes, the container can access additional resources and kernel capabilities of the host. Workloads running as root combined with privileged containers can be devastating as the user can get complete access to the host. This is, however, limited when running as a non-root user. Privileged containers are dangerous as they remove many of the built-in container isolation mechanisms entirely.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/dodgy-pod.yaml
+```
+```
+kubectl get events -n default -w
+```
+
 
 
 ## K02: Supply Chain Vulnerabilities
