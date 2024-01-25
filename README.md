@@ -17,9 +17,6 @@ aws eks update-kubeconfig --region eu-west-1 --name falco-cluster
 eksctl create cluster --name falco-cluster --without-nodegroup
 ```
 
-<img width="919" alt="Screenshot 2023-12-13 at 20 22 38" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/e3e82de6-8da6-4d14-a83c-a1efed4ea685">
-
-
 Once ```aws-node``` DaemonSet is deleted, EKS will not try to restore it.
 ```
 kubectl -n kube-system delete daemonset aws-node
@@ -41,16 +38,10 @@ helm install cilium cilium/cilium --version 1.9.18 \
   --set nodeinit.enabled=true
 ```
 
-<img width="919" alt="Screenshot 2023-12-13 at 20 44 34" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/0d725bae-e9f0-4710-8844-37ea5c86f4f6">
-
-
 Create a node group since there are no worker nodes for our pods
 ```
 eksctl create nodegroup --cluster falco-cluster --node-type t3.xlarge --nodes 1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
 ```
-
-<img width="986" alt="Screenshot 2024-01-23 at 13 56 26" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/0a8f6769-8784-4d47-b6fd-c517e1340f31">
-
 
 ```
 mkdir falco-response
@@ -121,8 +112,6 @@ helm uninstall falco-talon -n falco
 kubectl get pods -n falco
 ```
 
-<img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
-
 
 ## K01: Insecure Workload Configurations
 The security context of a workload in Kubernetes is highly configurable which can lead to serious security misconfigurations propagating across an organization’s workloads and clusters. The Kubernetes adoption, security, and market trends report 2022 from Redhat stated that nearly 53% of respondents have experienced a misconfiguration incident in their Kubernetes environments in the last 12 months.
@@ -134,6 +123,15 @@ kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testi
 ```
 
 
+## K02: Supply Chain Vulnerabilities
+## K03: Overly Permissive RBAC Configurations
+## K04: Lack of Centralized Policy Enforcement
+## K05: Inadequate Logging and Monitoring
+## K06: Broken Authentication Mechanisms
+## K07: Missing Network Segmentation Controls
+## K08: Secrets Management Failures
+## K09: Misconfigured Cluster Components
+## K10: Outdated and Vulnerable Kubernetes Components
 
 
 
