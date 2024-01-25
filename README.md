@@ -123,6 +123,28 @@ kubectl get pods -n falco
 
 <img width="1199" alt="Screenshot 2023-12-13 at 20 58 02" src="https://github.com/nigel-falco/falco-talon-testing/assets/152274017/b26f6857-ad33-4fe4-8b7a-d904ccd2c2c1">
 
+
+## K01: Insecure Workload Configurations
+The security context of a workload in Kubernetes is highly configurable which can lead to serious security misconfigurations propagating across an organization’s workloads and clusters. The Kubernetes adoption, security, and market trends report 2022 from Redhat stated that nearly 53% of respondents have experienced a misconfiguration incident in their Kubernetes environments in the last 12 months.
+
+
+## K01.01: Application processes should not run as root
+```
+kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/RunAsRoot.yaml
+```
+
+
+
+
+
+
+
+
+
+
+<br/><br/><br/><br/><br/>
+
+
 ## Check for killed process in realtime
 Run this command command in the second window:
 ```
