@@ -35,6 +35,16 @@
   actions:
     - action: Labelize Pod as Suspicious
 
-- rules: Container Run as Root User
+- rule: Container Run as Root User
+  match:
+    rules:
+      - Container Run as Root User
   actions:
-    - action: kubernetes:terminate
+    - action: Terminate Pod
+
+- rule: Detect crypto miners using the Stratum protocol
+  match:
+    rules:
+      - Detect crypto miners using the Stratum protocol
+  actions:
+    - action: Terminate Pod
