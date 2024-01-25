@@ -33,6 +33,20 @@ customRules:
     - list: white_listed_modules
       items: []
 
+    - rule: Detect crypto miners using the Stratum protocol
+      desc: > 
+      Miners commonly specify the mining pool to connect to using a URI that starts with "stratum+tcp". However, this rule is highly specific to 
+      this technique, and matching command-line arguments can generally be bypassed quite easily.
+      condition: > 
+        spawned_process 
+        and (proc.cmdline contains "stratum+tcp" or 
+           proc.cmdline contains "stratum2+tcp" or 
+           proc.cmdline contains "stratum+ssl" or 
+           proc.cmdline contains "stratum2+ssl")
+      output: Possible miner running (evt_type=%evt.type user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags %container.info)
+      priority: CRITICAL
+      tags: [maturity_sandbox, host, container, process, mitre_impact, T1496]  
+
     - rule: Linux Kernel Module Injection Detected
       desc: Detect kernel module was injected (from container).
       condition: spawned_process and container and proc.name=insmod and not proc.args in (white_listed_modules)
