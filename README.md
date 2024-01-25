@@ -1,12 +1,16 @@
 # Mitigating K8s OWASP T10 risks with a cloud-native response engine
 
+
+Table of Contents
 | OWASP Control | Sub-Control | Description | Falco Rule | Talon Response Action |
 |---------------|-------------|-------------|------------|-----------------------|
 | K01: Insecure Workload Configurations | K01:01 | Application processes should not run as root | `Falco rule for detecting root processes` | Example Talon action for root processes |
 | | K01:02 | Read-only filesystems should be used | `Falco rule for detecting writable filesystems on containers` | Example Talon action for writable filesystems |
 | | K01:03 | Privileged containers should be disallowed | `Falco rule for detecting privileged containers` | Example Talon action for privileged containers |
 | K02: Supply Chain Vulnerabilities | Example sub-control | Example description | `Falco rule for detecting the issue` | Example Talon action |
-| K03: Overly Permissive RBAC Configurations | Example sub-control | Example description | `Falco rule for detecting the issue` | Example Talon action |
+| K03: Overly Permissive RBAC Configurations | K03:01 | Unnecessary use of cluster-admin | `Falco rule for detecting the issue` | Example Talon action |
+| | K03:02 | Unnecessary use of LIST permission | `Falco rule for detecting writable filesystems on containers` | Example Talon action for writable filesystems |
+| | K03:03 | Unnecessary use of WATCH permission | `Falco rule for detecting privileged containers` | Example Talon action for privileged containers |
 | K04: Lack of Centralized Policy Enforcement | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
 | K05: Inadequate Logging and Monitoring | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
 | K06: Broken Authentication Mechanisms | Example sub-control | `Falco rule for detecting the issue` | Example Talon action |
