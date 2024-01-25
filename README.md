@@ -108,13 +108,16 @@ helm install falco-talon . -n falco
 The security context of a workload in Kubernetes is highly configurable which can lead to serious security misconfigurations propagating across an organization’s workloads and clusters. The Kubernetes adoption, security, and market trends report 2022 from Redhat stated that nearly 53% of respondents have experienced a misconfiguration incident in their Kubernetes environments in the last 12 months.
 
 
-## K01.01: Application processes should not run as root
+<details>
+  <summary>K01.01: Application processes should not run as root</summary>
 ```
 kubectl apply -f https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/RunAsRoot.yaml
 ```
 ```
 kubectl get events -n default -w
 ```
+</details>
+
 
 ## K02: Supply Chain Vulnerabilities
 ## K03: Overly Permissive RBAC Configurations
