@@ -1,16 +1,42 @@
-- action: Terminate Pod
-  actionner: kubernetes:terminate
-
 - action: Disable outbound connections
   actionner: kubernetes:networkpolicy
   parameters:
     allow:
       - "192.168.1.0/24"
       - "172.17.0.0/16"
-      - "10.0.0.0/32"
+      - "10.0.0.0/32"   
+
+#- action: Terminate Pod
+#  actionner: kubernetes:terminate
+
+#tshark -i any -a duration:15 -w mining-pool-capture.pcap
+
+- action: Run Mining Pool Wireshark capture
+  actionner: kubernetes:script
+  parameters:
+    shell: /bin/bash
+    script: |
+      tshark -i any -c 20 -w stratum-protocol-capture.pcap
+    # tcpdump -i eth0 -W 1 -G 30 -w tcpdump-capture.pcap
+    # tshark -i any -a duration:20 -w stratum-protocol-capture.pcap
+
+- action: Run Stratum Wireshark capture
+  actionner: kubernetes:script
+  parameters:
+    shell: /bin/bash
+    script: |
+      tshark -i any -a duration:20 -w stratum-protocol-capture.pcap
+    # tcpdump -i eth0 -W 1 -G 30 -w tcpdump-capture2.pcap      
+
+#- action: Install Wireshark in Container
+#  actionner: kubernetes:script
+#  parameters:
+#    shell: /bin/bash
+#    script: |
+#      apt install tshark -y
 
 - action: Labelize Pod as Suspicious
-  actionner: kubernetes:label
+  actionner: kubernetes:labelize
   parameters:
     labels:
       suspicious: true
@@ -18,33 +44,40 @@
 - rule: Suspicious outbound connection
   match:
     rules:
-      - Unexpected outbound connection destination
-      - Outbound Connection to Free.fr
+      - Outbound Connection to C2 Servers
+#      - Outbound Connection to Free.fr
   actions:
     - action: Disable outbound connections
-    - action: Terminate Pod
-      parameters:
-        grace_period_seconds: 0
+#    - action: Terminate Pod
+#      parameters:
+#        grace_period_seconds: 0
 
-# - rule: Terminal shell in container
-#   match:
-#     rules:
-#       - Terminal shell in container
-#     output_fields:
-#       - k8s.ns.name!=kube-system, k8s.ns.name!=falco
-#   actions:
-#     - action: Labelize Pod as Suspicious
-
-- rule: Container Run as Root User
+- rule: Detect outbound connections to common miner pool ports
   match:
     rules:
-      - Container Run as Root User
+      - Detect outbound connections to common miner pool ports
   actions:
-    - action: Terminate Pod
+    - action: Run Mining Pool Wireshark capture
+#    - action: Terminate Pod
+#      parameters:
+#        grace_period_seconds: 8
 
 - rule: Detect crypto miners using the Stratum protocol
   match:
     rules:
       - Detect crypto miners using the Stratum protocol
   actions:
-    - action: Terminate Pod
+    - action: Run Stratum Wireshark capture
+#    - action: Terminate Pod
+#      parameters:
+#        grace_period_seconds: 8
+
+- rule: Terminal shell in container 
+  match:
+    rules:
+      - Terminal shell in container
+    output_fields:
+      - k8s.ns.name!=kube-system, k8s.ns.name!=falco
+  actions:
+    - action: Labelize Pod as Suspicious
+#    - action: Install Wireshark in Container
