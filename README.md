@@ -107,6 +107,10 @@ helm install falco falcosecurity/falco --namespace falco \
 
 ## Install Falco Talon
 
+Removing old instances of the Falco Talon git directory using forced recursive:
+```
+rm -rf falco-talon
+```
 ```
 git clone https://github.com/Issif/falco-talon.git
 ```
