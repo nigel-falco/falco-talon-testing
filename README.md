@@ -261,15 +261,108 @@ Talon can be removed at any time via:
 helm uninstall falco-talon -n falco
 ```
 
-Scale down the cluster
-```
-eksctl get nodegroups --cluster falco-cluster
-```
-```
-eksctl scale nodegroup --cluster falco-cluster --name ng-03dfe2da --nodes 0
-```
-
 Kubecolor
 ```
 alias kubectl="kubecolor"
+```
+
+## Confirm Falco and Falco Talon run correctly
+Once the pod is ready, run the following command to see the logs:
+```
+kubectl logs -l app.kubernetes.io/name=falco -n falco -c falco | grep -E "syscall|Kernel"
+```
+Run the following command to trigger one of the [Falco rules](https://thomas.labarussias.fr/falco-rules-explorer/):
+```
+find /root -name "id_rsa"
+```
+
+Check that Falco correctly intercepted the potentially dangerous command:
+```
+kubectl logs -l app.kubernetes.io/name=falco -n falco -c falco | grep "find /root -name id_rsa"
+```
+
+## Falco Talon Install
+
+Git clone is used to target and create a copy of the [falco-talon](https://docs.falco-talon.org/docs/installation_usage/helm/) repository:
+```
+git clone https://github.com/falco-talon/falco-talon.git
+```
+
+Once downloaded, change directory to the Helm folder before running the ***helm install*** command:
+```
+cd falco-talon/deployment/helm/
+helm install falco-talon . -n falco
+```
+
+If the falco-talon pods are running, we can progress to the next lab scenario:
+```
+kubectl get pods -n falco -w | grep talon
+```
+
+In the ***Falco Talon*** tab, change Directory (cd) to the folder with the Falco Talon default rules:
+```
+cd falco-talon/deployment/helm/
+```
+Remove (rm) the existing, default rules file:
+```
+rm rules.yaml
+```
+
+Download (wget) the updated Talon rule:
+```
+wget https://raw.githubusercontent.com/nigel-falco/wireshark-falco/main/rules.yaml
+```
+
+Upgrade the existing helm installation of Falco Talon for enforce the changes:
+```
+helm uninstall falco-talon -n falco
+```
+```
+helm install falco-talon . -n falco
+```
+
+Create the deployment using a generic `ubuntu:latest` image that everyone understands.
+```
+kubectl apply -f - <<EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:latest
+        command: ["/bin/sh"]
+        args: ["-c", "apt-get update && apt-get install -y curl tcpdump tshark && sleep infinity"]
+        securityContext:
+          privileged: true
+EOF
+```
+
+Note: This creates a pod called `ubuntu` in the `default` network namespace:
+```
+kubectl get pods -w | grep ubuntu
+```
+
+In the **Check Events** tab, let's watch for events in the **default** namespace
+```
+kubectl get events -n default -w
+```
+In a separate ***Ubuntu Pod*** tab, shell into a container with label ***app=ubuntu*** (Talon should add the **new labels in Check Events tab**):
+```
+kubectl exec -it $(kubectl get pods -l app=ubuntu -o jsonpath='{.items[0].metadata.name}') -- /bin/bash
+```
+
+If you don't see the appropriate output in the 'Events' tab, check the Talon logs:
+```
+kubectl logs -n falco -l app.kubernetes.io/instance=falco-talon --max-log-requests=10
 ```
