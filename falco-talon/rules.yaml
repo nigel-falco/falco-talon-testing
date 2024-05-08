@@ -36,7 +36,7 @@
 #      apt install tshark -y
 
 - action: Labelize Pod as Suspicious
-  actionner: kubernetes:labelize
+  actionner: kubernetes:label
   parameters:
     labels:
       suspicious: true
