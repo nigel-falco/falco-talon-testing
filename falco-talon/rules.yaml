@@ -35,7 +35,7 @@
 #    script: |
 #      apt install tshark -y
 
-- action: Labelize Pod as Suspicious
+- action: Label Pod as Suspicious
   actionner: kubernetes:label
   parameters:
     labels:
@@ -79,5 +79,5 @@
     output_fields:
       - k8s.ns.name!=kube-system, k8s.ns.name!=falco
   actions:
-    - action: Labelize Pod as Suspicious
+    - action: Label Pod as Suspicious
 #    - action: Install Wireshark in Container
