@@ -310,7 +310,7 @@ rm rules.yaml
 
 Download (wget) the updated Talon rule:
 ```
-wget https://raw.githubusercontent.com/nigel-falco/wireshark-falco/main/rules.yaml
+wget https://raw.githubusercontent.com/nigel-falco/falco-talon-testing/main/falco-talon/rules.yaml
 ```
 
 Upgrade the existing helm installation of Falco Talon for enforce the changes:
