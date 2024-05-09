@@ -351,6 +351,12 @@ spec:
           privileged: true
 EOF
 ```
+```
+kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Falco-MicroK8s/main/ubuntu.yaml
+```
+```
+kubectl delete -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Falco-MicroK8s/main/ubuntu.yaml
+```
 
 Note: This creates a pod called `ubuntu` in the `default` network namespace:
 ```
