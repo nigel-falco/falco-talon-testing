@@ -1,3 +1,8 @@
+- action: Delete the suspicious resource
+  actionner: kubernetes:delete
+  parameters:
+    tail_lines: 200
+
 - action: Disable outbound connections
   actionner: kubernetes:networkpolicy
   parameters:
@@ -81,3 +86,41 @@
   actions:
     - action: Label Pod as Suspicious
 #    - action: Install Wireshark in Container
+
+- rule: Privileged Pod Created
+  match:
+    rules:
+      - Privileged Pod Created
+  actions:
+    - action: Terminate Pod
+      parameters:
+        grace_period_seconds: 0
+
+- rule: Container Run as Root User
+  match:
+    rules:
+      - Container Run as Root User
+  actions:
+    - action: Terminate Pod
+      parameters:
+        grace_period_seconds: 0
+        ignore_daemonsets: true
+        ignore_statefulsets: true
+
+- rule: Pod created without read-only file system
+  match:
+    rules:
+      - Pod created without read-only file system
+  actions:
+    - action: Terminate Pod
+      parameters:
+        grace_period_seconds: 0
+        ignore_daemonsets: true
+        ignore_statefulsets: true
+
+- rule: Ingress Object without TLS Certificate Created
+  match:
+    rules:
+      - Ingress Object without TLS Certificate Created
+  actions:
+    - action: Delete the suspicious resource
